@@ -11,10 +11,11 @@ import object.ObjectXY;
 
 public abstract class LocationAbstract implements HotkeyListener
 {
-	public ObjectXY objectXY;
-	public JLabel HoldLabel;
-	public String title;
-	public int Keynumber;
+	protected ObjectXY objectXY;
+	protected JLabel HoldLabel;
+	protected String title;
+
+	protected int Keynumber;
 	
 	public LocationAbstract(JLabel Label,int number,String Title)
 	{
@@ -42,4 +43,15 @@ public abstract class LocationAbstract implements HotkeyListener
 		return objectXY;
 	}
 	
+	public final String getTitle() {
+		return title;
+	}
+	
+	public JLabel getHoldLabel() {
+		return HoldLabel;
+	}
+
+	public void ResetTitle() {
+		HoldLabel.setText("°Ï°ì"+title+"-X:    "+",Y:    ");
+	}
 }

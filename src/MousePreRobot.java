@@ -2,15 +2,6 @@ import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.Robot;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -21,13 +12,18 @@ import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.JIntellitype;
 
 import abstractClass.LocationAbstract;
-import object.ObjectXY;
+import abstractClass.MouseLocationButton;
+import abstractClass.MouseLocation_DoubleXY;
+import robot.Panel.RetangularPanel;
+import robot.buttonEvents.ResetBattle_FieldButton;
+import robot.robotEvent.RobotOperation;
+import robot.test.AButtonListener;
+import robot.test.BButtonListener;
 
 
 public class MousePreRobot
 {
 	Container con;
-	JLabel ButtonF;
 	RetangularPanel Retangular1;
 	RetangularPanel Retangular2;
 	
@@ -53,17 +49,17 @@ public class MousePreRobot
 		ButtonA.setBounds(10,10 , 250, 30);
 		JLabel ButtonB = new JLabel("【步驟2】移到區域B按下 F 設定第一個點");
 		ButtonB.setBounds(10,50 , 250, 30);
-		JLabel ButtonC = new JLabel("【步驟3】   開始行動按下 A");
+		JLabel ButtonC = new JLabel("【步驟3】   開始行動按下 Ctrl + A");
 		ButtonC.setBounds(10,90 , 250, 30);
-		JLabel ButtonD = new JLabel("結束行動 按下Alt+ S");
+		JLabel ButtonD = new JLabel("結束行動 按下Alt + S");
 		ButtonD.setBounds(10,130 ,250, 30);
 		ButtonD.setForeground(Color.RED);
 		ButtonD.setFont(new Font(Font.DIALOG,Font.ITALIC,22));
 		
-		JLabel ButtonE = new JLabel("區域A-X:     ,Y:     "+"按D");
-		ButtonE.setBounds(440,200 , 250, 30);
-		JLabel ButtonF = new JLabel("區域B-X:     ,Y:     "+"按F");
-		ButtonF.setBounds(440,240 , 250, 30);
+		JLabel Dynamic = new JLabel("區域A-X:     ,Y:     "+"按D");
+		Dynamic.setBounds(440,200 , 250, 30);
+		JLabel Dynamic0 = new JLabel("區域B-X:     ,Y:     "+"按F");
+		Dynamic0.setBounds(440,240 , 250, 30);
 		
 		JLabel Dynamic1 = new JLabel("區域C-X:     ,Y:     "+"按Z");
 		Dynamic1.setBounds(440,280 , 550, 30);
@@ -102,8 +98,13 @@ public class MousePreRobot
 		
 		JLabel Dynamic15 = new JLabel("偵測戰鬥用01區域座標-X:     ,Y:     "+"按K");
 		Dynamic15.setBounds(400,520 , 550, 30);
-		JLabel Dynamic16 = new JLabel("偵測戰鬥用02區域座標-X:     ,Y:     "+"按L");
+		JLabel Dynamic16 = new JLabel("偵測戰鬥用01區域輔助座標-X:     ,Y:     "+"按L");
 		Dynamic16.setBounds(400,560 , 550, 30);
+		
+		JLabel Dynamic17 = new JLabel("偵測戰鬥用02區域座標-X:     ,Y:     ");
+		Dynamic17.setBounds(400,600 , 550, 30);
+		JLabel Dynamic18 = new JLabel("偵測戰鬥用02區域輔助座標-X:     ,Y:     ");
+		Dynamic18.setBounds(400,640 , 550, 30);
 		
 		JButton ButtonG = new JButton("測試用按鈕 A(移動到此鈕按D)");
 		ButtonG.addActionListener(new AButtonListener());
@@ -115,6 +116,10 @@ public class MousePreRobot
 		CheckBox.setSelected(true);
 		CheckBox.setFocusPainted(false);
 		CheckBox.setBounds(350,130 ,210, 30);
+		JButton ResetBattleField = new JButton("重設判斷區域");
+		ResetBattleField.setBounds(690, 545 , 130, 30);
+		ResetBattleField.setFont(new Font(Font.SERIF,Font.BOLD,12));
+		
 		
 		Retangular1 = new RetangularPanel();
 		Retangular1.setBounds(100,530, 50, 50);
@@ -125,8 +130,8 @@ public class MousePreRobot
 		con.add(ButtonB);
 		con.add(ButtonC);
 		con.add(ButtonD);
-		con.add(ButtonE);
-		con.add(ButtonF);
+		con.add(Dynamic);
+		con.add(Dynamic0);
 		con.add(ButtonG);
 		con.add(ButtonH);
 		con.add(CheckBox);
@@ -146,19 +151,22 @@ public class MousePreRobot
 		con.add(Dynamic14);
 		con.add(Dynamic15);
 		con.add(Dynamic16);
+		con.add(Dynamic17);
+		con.add(Dynamic18);
 		con.add(text1);
 		con.add(text2);
+		con.add(ResetBattleField);
 		con.add(Retangular1);
 		con.add(Retangular2);
 		
 		frame.setTitle("魔力SuperHero");		
 		frame.pack();
-		frame.setSize(750,650);
+		frame.setSize(850,750);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		MouseLocationButton A = new MouseLocationButton(ButtonE,1,"A");
-		MouseLocationButton B = new MouseLocationButton(ButtonF,2,"B");
+		MouseLocationButton A = new MouseLocationButton(Dynamic,1,"A");
+		MouseLocationButton B = new MouseLocationButton(Dynamic0,2,"B");
 		MouseLocationButton C = new MouseLocationButton(Dynamic1,5,"C");
 		MouseLocationButton D = new MouseLocationButton(Dynamic2,6,"D");
 		MouseLocationButton E = new MouseLocationButton(Dynamic3,7,"E");
@@ -173,8 +181,11 @@ public class MousePreRobot
 		MouseLocationButton FF = new MouseLocationButton(Dynamic12,16,"FF");
 		MouseLocationButton GG = new MouseLocationButton(Dynamic13,17,"GG");
 		MouseLocationButton HH = new MouseLocationButton(Dynamic14,18,"HH");
-		MouseLocationButton BattleField01 = new MouseLocationButton(Dynamic15,19,"偵測戰鬥用01區域座標");
-		MouseLocationButton BattleField02 = new MouseLocationButton(Dynamic16,20,"偵測戰鬥用02區域座標");
+		MouseLocation_DoubleXY BattleField01 = new MouseLocation_DoubleXY(Dynamic15,Dynamic16,19,"偵測戰鬥用01區域座標","偵測戰鬥用01區域輔助座標");
+		MouseLocation_DoubleXY BattleField02 = new MouseLocation_DoubleXY(Dynamic17,Dynamic18,20,"偵測戰鬥用02區域座標","偵測戰鬥用02區域輔助座標");
+		
+		ResetBattleField.addActionListener(new ResetBattle_FieldButton(BattleField01,BattleField02));	//新增戰鬥區域判斷回歸按鈕
+		
 		
 		JIntellitype.getInstance().addHotKeyListener(new MouseButtonStart(A, B, C, D , E, F ,G, H,
 																		  AA,BB,CC,DD,EE,FF,GG,HH,
@@ -231,20 +242,6 @@ public class MousePreRobot
 	}
 }
 
-class MouseLocationButton extends LocationAbstract
-{
-	public JLabel HoldLabel;
-	public String title;
-	public int Keynumber;
-	
-	public MouseLocationButton(JLabel Label, int number, String Title) 
-	{
-		super(Label,number,Title);
-		HoldLabel = Label;
-		title = Title;
-		Keynumber = number;
-	}
-}
 
 class MouseButtonStart implements HotkeyListener
 {
@@ -256,7 +253,7 @@ class MouseButtonStart implements HotkeyListener
 							LocationAbstract G , LocationAbstract H,
 							LocationAbstract AA,LocationAbstract BB , LocationAbstract CC , LocationAbstract DD , LocationAbstract EE , LocationAbstract FF,
 							LocationAbstract GG , LocationAbstract HH,
-							LocationAbstract Battle01 , LocationAbstract Battle02,
+							MouseLocation_DoubleXY Battle01 , MouseLocation_DoubleXY Battle02,
 			                JCheckBox DynamicMove,RetangularPanel Retangular,RetangularPanel Retangular2) throws AWTException
 	{
 		DynamicMoveSelect = DynamicMove;
@@ -277,6 +274,7 @@ class MouseButtonStart implements HotkeyListener
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void Task_interrupt()
 	{
 		Task.interrupt();
@@ -300,249 +298,3 @@ class MouseButtonStop implements HotkeyListener
 	}	
 }
 
-class RobotOperation implements Runnable 
-{
-	public static Robot robot;
-	private int number = 0;
-	private static int inr = 0;
-	private Vector<LocationAbstract> List1 = new Vector<LocationAbstract>();
-	private Vector<LocationAbstract> List2 = new Vector<LocationAbstract>();
-	private LocationAbstract HoldBattleField01;
-	private LocationAbstract HoldBattleField02;
-	
-	private Boolean DynamicMoveSelect;
-	private RetangularPanel HoldRetangular;
-	private RetangularPanel HoldRetangula2;
-	
-	public RobotOperation(LocationAbstract A,LocationAbstract B , LocationAbstract C , LocationAbstract D , LocationAbstract E , LocationAbstract F,
-			 			  LocationAbstract G , LocationAbstract H,
-			 			 LocationAbstract AA,LocationAbstract BB , LocationAbstract CC , LocationAbstract DD , LocationAbstract EE , LocationAbstract FF,
-			 			  LocationAbstract GG , LocationAbstract HH,
-			 			 LocationAbstract Battle01 , LocationAbstract Battle02,
-						  Boolean Dynamic,RetangularPanel Retangular,RetangularPanel Retangular2) throws AWTException
-	{
-		 robot = new Robot();
-		 List1.add(A);
-		 List1.add(B);
-		 List1.add(C);
-		 List1.add(D);
-		 List1.add(E);
-		 List1.add(F);
-		 List1.add(G);
-		 List1.add(H);
-		 
-		 List2.add(AA);
-		 List2.add(BB);
-		 List2.add(CC);
-		 List2.add(DD);
-		 List2.add(EE);
-		 List2.add(FF);
-		 List2.add(GG);
-		 List2.add(HH);
-		 
-		HoldBattleField01 = Battle01;
-		HoldBattleField02 = Battle02;
-		DynamicMoveSelect = Dynamic;
-		HoldRetangular = Retangular;
-		HoldRetangula2 = Retangular2;
-	}
-	
-	@Override
-	public void run() 
-	{
-		/*
-		 * 首先偵測戰鬥兩個區域的X Y
-		 */
-		 int PixelField_01_X = HoldBattleField01.getObjectXY().getX();
-		 int PixelField_01_Y = HoldBattleField01.getObjectXY().getY();
-		 int PixelField_02_X = HoldBattleField02.getObjectXY().getX();
-		 int PixelField_02_Y = HoldBattleField02.getObjectXY().getY();			
-			
-		if(List1.get(0).getObjectXY().getX()==0 && List2.get(0).getObjectXY().getX()==0)
-		{
-			System.out.println("【助手回報】無設定任何點");
-			System.out.println("【Exception】進程中止");
-
-		}
-		else
-		{
-			
-			inr = 1;
-			while(true)
-			{
-				Color JudgeColor01 = robot.getPixelColor(PixelField_01_X, PixelField_01_Y);
-				Color JudgeColor02 = robot.getPixelColor(PixelField_02_X, PixelField_02_Y);
-				HoldRetangular.SetColor(JudgeColor01);
-				HoldRetangula2.SetColor(JudgeColor02);
-				HoldRetangular.repaint();
-				HoldRetangula2.repaint();
-				
-					if(inr == 0)
-					{
-						break;
-					}		
-				
-				if(JudgeColor01.getRed()==0 || JudgeColor01.getBlue()==0 || JudgeColor01.getGreen()==0 )	//是黑色就進入連續點擊
-				{
-					for(int count = 0 ; count < List1.size() ;count++)
-					{
-						/*
-						 * 用於在迴圈內判斷戰鬥區域顏色是否異常
-						 */
-						JudgeColor01 = robot.getPixelColor(PixelField_01_X, PixelField_01_Y);
-						JudgeColor02 = robot.getPixelColor(PixelField_02_X, PixelField_02_Y);
-						System.out.println("顏色1為:"+JudgeColor01);	//取顏色
-						System.out.println("顏色2為:"+JudgeColor02);	//取顏色
-						System.out.println("觸發自動");
-						HoldRetangular.SetColor(JudgeColor01);
-						HoldRetangula2.SetColor(JudgeColor02);
-						HoldRetangular.repaint();
-						HoldRetangula2.repaint();
-						if(JudgeColor01.getRed()!=0 || JudgeColor01.getBlue()!=0 || JudgeColor01.getGreen()!=0 )
-						{
-							/*
-							 * 用於在迴圈不要走完提前打斷
-							 */
-							System.out.println("【 自動中止 】Non Attack state -Success");
-							break;
-						}
-						
-						if(List1.get(count).getObjectXY().getX()!=0 ||List1.get(count).getObjectXY().getY()!=0)
-						{	
-							robot.mouseMove(List1.get(count).getObjectXY().getX(),List1.get(count).getObjectXY().getY());// 移動到每個紀錄點隨機時間
-							robot.delay(100);
-							robot.mousePress(MouseEvent.BUTTON1_MASK);// 按下滑鼠
-							robot.delay(100);
-							robot.mouseRelease(MouseEvent.BUTTON1_MASK);
-							robot.delay(100);
-							robot.mousePress(MouseEvent.BUTTON1_MASK);// 按下滑鼠
-							robot.delay(100);
-							robot.mouseRelease(MouseEvent.BUTTON1_MASK);
-							
-							System.out.println("正在點擊"+List1.get(count).title+"區域: "+List1.get(count).getObjectXY().getX()+" ,  "+List1.get(count).getObjectXY().getY());
-							
-							if(count ==3)
-							{
-								if(DynamicMoveSelect==true)					//動態計算隨機等待時間
-								{
-									int RandomWait = 500+(int)(Math.random()*1000);
-									System.out.println("動態等待時間"+RandomWait);
-									
-									robot.delay(RandomWait);							
-								}
-							}
-							else
-							{
-									robot.delay(100);
-									if(inr == 0)
-									{
-										break;
-									}
-							}			
-						}
-						else
-							{
-								//不執行東西
-							}
-						
-					}	
-				}
-				
-				if(JudgeColor02.getRed()==0 || JudgeColor02.getBlue()==0 || JudgeColor02.getGreen()==0 )	//是黑色就進入連續點擊
-				{
-					for(int count = 0 ; count < List2.size() ;count++)
-					{
-						/*
-						 * 用於在迴圈內判斷戰鬥區域顏色是否異常
-						 */
-						JudgeColor01 = robot.getPixelColor(PixelField_01_X, PixelField_01_Y);
-						JudgeColor02 = robot.getPixelColor(PixelField_02_X, PixelField_02_Y);
-						System.out.println("顏色1為:"+JudgeColor01);	//取顏色
-						System.out.println("顏色2為:"+JudgeColor02);	//取顏色
-						System.out.println("觸發自動");
-						HoldRetangular.SetColor(JudgeColor01);
-						HoldRetangula2.SetColor(JudgeColor02);
-						HoldRetangular.repaint();
-						HoldRetangula2.repaint();
-						if(JudgeColor02.getRed()!=0 || JudgeColor02.getBlue()!=0 || JudgeColor02.getGreen()!=0 )
-						{
-							/*
-							 * 用於在迴圈不要走完提前打斷
-							 */
-							System.out.println("【 自動中止 】Non Attack state -Success");
-							break;
-						}
-						
-						if(List2.get(count).getObjectXY().getX()!=0 ||List2.get(count).getObjectXY().getY()!=0)
-						{	
-							robot.mouseMove(List2.get(count).getObjectXY().getX(),List2.get(count).getObjectXY().getY());// 移動到每個紀錄點隨機時間
-							robot.delay(100);
-							robot.mousePress(MouseEvent.BUTTON1_MASK);// 按下滑鼠
-							robot.delay(100);
-							robot.mouseRelease(MouseEvent.BUTTON1_MASK);
-							robot.delay(100);
-							robot.mousePress(MouseEvent.BUTTON1_MASK);// 按下滑鼠
-							robot.delay(100);
-							robot.mouseRelease(MouseEvent.BUTTON1_MASK);
-							
-							System.out.println("正在點擊"+List2.get(count).title+"區域: "+List2.get(count).getObjectXY().getX()+" ,  "+List2.get(count).getObjectXY().getY());
-							
-							if(count ==3)
-							{
-								if(DynamicMoveSelect==true)					//動態計算隨機等待時間
-								{
-									int RandomWait = 500+(int)(Math.random()*1000);
-									System.out.println("動態等待時間"+RandomWait);
-									
-									robot.delay(RandomWait);							
-								}
-							}
-							else
-							{
-									robot.delay(100);
-									if(inr == 0)
-									{
-										break;
-									}
-							}			
-						}
-						else
-							{
-								//不執行東西
-							}
-						
-					}	
-				}
-				
-				JudgeColor01 = null;
-				JudgeColor02 = null;
-			}
-		}
-	}
-	
-	public static void interrupt()
-	{
-		inr = 0;
-	}
-	
-}
-
-class AButtonListener implements ActionListener
-{
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		System.out.println("A");
-	}
-}
-
-class BButtonListener implements ActionListener
-{
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		System.out.println("B");
-	}	
-}

@@ -1,3 +1,4 @@
+package robot.Panel;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -5,9 +6,6 @@ import javax.swing.JPanel;
 
 public class RetangularPanel extends JPanel
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private Color color = Color.BLACK;
