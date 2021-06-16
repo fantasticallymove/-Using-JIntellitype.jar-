@@ -26,7 +26,8 @@ public class MousePreRobot
 	Container con;
 	RetangularPanel Retangular1;
 	RetangularPanel Retangular2;
-	
+	RetangularPanel Retangular3;
+	RetangularPanel Retangular4;
 	public static void main(String[] args) throws AWTException
 	{
 		new MousePreRobot().GUI();
@@ -42,8 +43,12 @@ public class MousePreRobot
 		
 		JLabel text1 = new JLabel("01跋办 肅︹:");
 		text1.setBounds(20,530 , 550, 30);
-		JLabel text2 = new JLabel("02跋办 肅︹:");
+		JLabel text2 = new JLabel("01徊跋办 肅︹:");
 		text2.setBounds(160,530 , 550, 30);
+		JLabel text3 = new JLabel("02跋办 肅︹:");
+		text3.setBounds(20,600 , 550, 30);
+		JLabel text4 = new JLabel("02徊跋办 肅︹:");
+		text4.setBounds(160,600 , 550, 30);
 		
 		JLabel ButtonA = new JLabel("˙艼1   簿跋办A D 砞﹚材翴");
 		ButtonA.setBounds(10,10 , 250, 30);
@@ -56,44 +61,44 @@ public class MousePreRobot
 		ButtonD.setForeground(Color.RED);
 		ButtonD.setFont(new Font(Font.DIALOG,Font.ITALIC,22));
 		
-		JLabel Dynamic = new JLabel("跋办A-X:     ,Y:     "+"D");
+		JLabel Dynamic = new JLabel("跋办A-X:     ,Y:     "+"Alt+D");
 		Dynamic.setBounds(440,200 , 250, 30);
-		JLabel Dynamic0 = new JLabel("跋办B-X:     ,Y:     "+"F");
+		JLabel Dynamic0 = new JLabel("跋办B-X:     ,Y:     "+"Alt+F");
 		Dynamic0.setBounds(440,240 , 250, 30);
 		
-		JLabel Dynamic1 = new JLabel("跋办C-X:     ,Y:     "+"Z");
+		JLabel Dynamic1 = new JLabel("跋办C-X:     ,Y:     "+"Alt+Z");
 		Dynamic1.setBounds(440,280 , 550, 30);
-		JLabel Dynamic2 = new JLabel("跋办D-X:     ,Y:     "+"X");
+		JLabel Dynamic2 = new JLabel("跋办D-X:     ,Y:     "+"Alt+X");
 		Dynamic2.setBounds(440,320 , 550, 30);
 				
-		JLabel Dynamic3 = new JLabel("跋办E-X:     ,Y:     "+"C");
+		JLabel Dynamic3 = new JLabel("跋办E-X:     ,Y:     "+"Alt+C");
 		Dynamic3.setBounds(440,360 , 550, 30);
-		JLabel Dynamic4 = new JLabel("跋办F-X:     ,Y:     "+"X");
+		JLabel Dynamic4 = new JLabel("跋办F-X:     ,Y:     "+"Alt+V");
 		Dynamic4.setBounds(440,400 , 550, 30);
 		
-		JLabel Dynamic5 = new JLabel("跋办G-X:     ,Y:     "+"B");
+		JLabel Dynamic5 = new JLabel("跋办G-X:     ,Y:     "+"Alt+B");
 		Dynamic5.setBounds(440,440 , 550, 30);
-		JLabel Dynamic6 = new JLabel("跋办H-X:     ,Y:     "+"N");
+		JLabel Dynamic6 = new JLabel("跋办H-X:     ,Y:     "+"Alt+N");
 		Dynamic6.setBounds(440,480 , 550, 30);
 		
-		JLabel Dynamic7 = new JLabel("跋办AA-X:     ,Y:     "+"Q");
+		JLabel Dynamic7 = new JLabel("跋办AA-X:     ,Y:     "+"Alt+Q");
 		Dynamic7.setBounds(10,200 , 250, 30);
-		JLabel Dynamic8 = new JLabel("跋办BB-X:     ,Y:     "+"W");
+		JLabel Dynamic8 = new JLabel("跋办BB-X:     ,Y:     "+"Alt+W");
 		Dynamic8.setBounds(10,240 , 250, 30);
 		
-		JLabel Dynamic9 = new JLabel("跋办CC-X:     ,Y:     "+"E");
+		JLabel Dynamic9 = new JLabel("跋办CC-X:     ,Y:     "+"Alt+E");
 		Dynamic9.setBounds(10,280 , 550, 30);
-		JLabel Dynamic10 = new JLabel("跋办DD-X:     ,Y:     "+"R");
+		JLabel Dynamic10 = new JLabel("跋办DD-X:     ,Y:     "+"Alt+R");
 		Dynamic10.setBounds(10,320 , 550, 30);
 				
-		JLabel Dynamic11 = new JLabel("跋办EE-X:     ,Y:     "+"T");
+		JLabel Dynamic11 = new JLabel("跋办EE-X:     ,Y:     "+"Alt+T");
 		Dynamic11.setBounds(10,360 , 550, 30);
-		JLabel Dynamic12 = new JLabel("跋办FF-X:     ,Y:     "+"Y");
+		JLabel Dynamic12 = new JLabel("跋办FF-X:     ,Y:     "+"Alt+Y");
 		Dynamic12.setBounds(10,400 , 550, 30);
 		
-		JLabel Dynamic13 = new JLabel("跋办GG-X:     ,Y:     "+"U");
+		JLabel Dynamic13 = new JLabel("跋办GG-X:     ,Y:     "+"Alt+U");
 		Dynamic13.setBounds(10,440 , 550, 30);
-		JLabel Dynamic14 = new JLabel("跋办HH-X:     ,Y:     "+"I");
+		JLabel Dynamic14 = new JLabel("跋办HH-X:     ,Y:     "+"Alt+I");
 		Dynamic14.setBounds(10,480 , 550, 30);
 		
 		JLabel Dynamic15 = new JLabel("盎代驹矮ノ01跋办畒夹-X:     ,Y:     "+"K");
@@ -124,7 +129,11 @@ public class MousePreRobot
 		Retangular1 = new RetangularPanel();
 		Retangular1.setBounds(100,530, 50, 50);
 		Retangular2 = new RetangularPanel();
-		Retangular2.setBounds(250,530, 50, 50);
+		Retangular2.setBounds(270,530, 50, 50);
+		Retangular3 = new RetangularPanel();
+		Retangular3.setBounds(100,600, 50, 50);
+		Retangular4 = new RetangularPanel();
+		Retangular4.setBounds(270,600, 50, 50);
 		
 		con.add(ButtonA);
 		con.add(ButtonB);
@@ -155,14 +164,19 @@ public class MousePreRobot
 		con.add(Dynamic18);
 		con.add(text1);
 		con.add(text2);
+		con.add(text3);
+		con.add(text4);
 		con.add(ResetBattleField);
 		con.add(Retangular1);
 		con.add(Retangular2);
+		con.add(Retangular3);
+		con.add(Retangular4);
 		
 		frame.setTitle("臸SuperHero");		
 		frame.pack();
 		frame.setSize(850,750);
 		frame.setVisible(true);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		MouseLocationButton A = new MouseLocationButton(Dynamic,1,"A");
@@ -190,7 +204,7 @@ public class MousePreRobot
 		JIntellitype.getInstance().addHotKeyListener(new MouseButtonStart(A, B, C, D , E, F ,G, H,
 																		  AA,BB,CC,DD,EE,FF,GG,HH,
 																		  BattleField01,BattleField02,
-																		  CheckBox,Retangular1,Retangular2));
+																		  CheckBox,Retangular1,Retangular2,Retangular3,Retangular4));
 		JIntellitype.getInstance().addHotKeyListener(new MouseButtonStop());
 	
 		JIntellitype.getInstance().addHotKeyListener(A);
@@ -213,11 +227,12 @@ public class MousePreRobot
 		JIntellitype.getInstance().addHotKeyListener(BattleField02);
 		
 		
-		JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_ALT, (int)'D');
-		JIntellitype.getInstance().registerHotKey(2, JIntellitype.MOD_ALT, (int)'F');
+
 		JIntellitype.getInstance().registerHotKey(3, JIntellitype.MOD_CONTROL, (int)'A');
 		JIntellitype.getInstance().registerHotKey(4, JIntellitype.MOD_CONTROL, (int)'S');
 		
+		JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_ALT, (int)'D');
+		JIntellitype.getInstance().registerHotKey(2, JIntellitype.MOD_ALT, (int)'F');
 		JIntellitype.getInstance().registerHotKey(5, JIntellitype.MOD_ALT, (int)'Z');
 		JIntellitype.getInstance().registerHotKey(6, JIntellitype.MOD_ALT, (int)'X');
 		JIntellitype.getInstance().registerHotKey(7, JIntellitype.MOD_ALT, (int)'C');
@@ -254,12 +269,12 @@ class MouseButtonStart implements HotkeyListener
 							LocationAbstract AA,LocationAbstract BB , LocationAbstract CC , LocationAbstract DD , LocationAbstract EE , LocationAbstract FF,
 							LocationAbstract GG , LocationAbstract HH,
 							MouseLocation_DoubleXY Battle01 , MouseLocation_DoubleXY Battle02,
-			                JCheckBox DynamicMove,RetangularPanel Retangular,RetangularPanel Retangular2) throws AWTException
+			                JCheckBox DynamicMove,RetangularPanel Retangular,RetangularPanel Retangular2,RetangularPanel Retangular3,RetangularPanel Retangular4) throws AWTException
 	{
 		DynamicMoveSelect = DynamicMove;
 		robot = new RobotOperation(A,B,C,D,E,F,G,H,
 									AA,BB,CC,DD,EE,FF,GG,HH,Battle01,Battle02,
-									DynamicMoveSelect.isSelected(),Retangular,Retangular2);
+									DynamicMoveSelect.isSelected(),Retangular,Retangular2,Retangular3,Retangular4);
 	}
 	
 	@Override

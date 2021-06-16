@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Robot;
 import java.awt.event.MouseEvent;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Vector;
 
 import abstractClass.LocationAbstract;
@@ -23,13 +24,32 @@ public class RobotOperation implements Runnable
 	private Boolean DynamicMoveSelect;
 	private RetangularPanel HoldRetangular;
 	private RetangularPanel HoldRetangula2;
+	private RetangularPanel HoldRetangula3;
+	private RetangularPanel HoldRetangula4;
+	
+	private Color JudgeColor01;
+	private Color JudgeColor01Support;
+	private Color JudgeColor02;
+	private Color JudgeColor02Support;
+	
+	private int PixelField_01_X;
+	private int PixelField_01_Y;
+	private int PixelField_Support01_X;
+	private int PixelField_Support01_Y;
+	private int PixelField_02_X;
+	private int PixelField_02_Y;
+	private int PixelField_Support02_X;
+	private int PixelField_Support02_Y;
+	
+	private Boolean checkField01 = false;
+	private Boolean checkField02 = false;	//修正這邊
 	
 	public RobotOperation(LocationAbstract A,LocationAbstract B , LocationAbstract C , LocationAbstract D , LocationAbstract E , LocationAbstract F,
 			 			  LocationAbstract G , LocationAbstract H,
 			 			  LocationAbstract AA,LocationAbstract BB , LocationAbstract CC , LocationAbstract DD , LocationAbstract EE , LocationAbstract FF,
 			 			  LocationAbstract GG , LocationAbstract HH,
 			 			 MouseLocation_DoubleXY Battle01 , MouseLocation_DoubleXY Battle02,
-						  Boolean Dynamic,RetangularPanel Retangular,RetangularPanel Retangular2) throws AWTException
+						  Boolean Dynamic,RetangularPanel Retangular,RetangularPanel Retangular2,RetangularPanel Retangular3,RetangularPanel Retangular4) throws AWTException
 	{
 		 robot = new Robot();
 		 List1.add(A);
@@ -55,6 +75,8 @@ public class RobotOperation implements Runnable
 		DynamicMoveSelect = Dynamic;
 		HoldRetangular = Retangular;
 		HoldRetangula2 = Retangular2;
+		HoldRetangula3 = Retangular3;
+		HoldRetangula4 = Retangular4;
 	}
 	
 	@Override
@@ -63,37 +85,54 @@ public class RobotOperation implements Runnable
 		/*
 		 * 首先偵測戰鬥兩個區域的X Y
 		 */
-		 int PixelField_01_X = HoldBattleField01.getObjectXY().getX();
-		 int PixelField_01_Y = HoldBattleField01.getObjectXY().getY();
-		 int PixelField_Support01_X = HoldBattleField01.getObjectXY2().getX();
-		 int PixelField_Support01_Y = HoldBattleField01.getObjectXY2().getX();
-		 int PixelField_02_X = HoldBattleField02.getObjectXY().getX();
-		 int PixelField_02_Y = HoldBattleField02.getObjectXY().getY();
-		 int PixelField_Support02_X = HoldBattleField02.getObjectXY2().getX();
-		 int PixelField_Support02_Y = HoldBattleField02.getObjectXY2().getX();	
-		 
+		 PixelField_01_X = HoldBattleField01.getObjectXY().getX();
+		 PixelField_01_Y = HoldBattleField01.getObjectXY().getY();
+		 PixelField_Support01_X = HoldBattleField01.getObjectXY2().getX();
+		 PixelField_Support01_Y = HoldBattleField01.getObjectXY2().getX();
+		 PixelField_02_X = HoldBattleField02.getObjectXY().getX();
+		 PixelField_02_Y = HoldBattleField02.getObjectXY().getY();
+		 PixelField_Support02_X = HoldBattleField02.getObjectXY2().getX();
+		 PixelField_Support02_Y = HoldBattleField02.getObjectXY2().getY();
+		 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// 檢查有無設定任何點過
+											Boolean isNullPointer01 = true;
+											Boolean isNullPointer02 = true;
+											Iterator<LocationAbstract> iterator = List1.iterator();
+											while(iterator.hasNext()) 
+											{
+											  LocationAbstract result = iterator.next();
+											  int check = result.getObjectXY().getX();
+											  if(check!=0)
+											  {
+												  isNullPointer01 = false;
+											  }
+											}
+											Iterator<LocationAbstract> iterator2 = List2.iterator();
+											while(iterator2.hasNext()) 
+											{
+											  LocationAbstract result = iterator2.next();
+											  int check = result.getObjectXY().getX();
+											  if(check!=0)
+											  {
+												  isNullPointer02 = false;
+											  }
+											}
 
-		if(List1.get(0).getObjectXY().getX()==0 && List2.get(0).getObjectXY().getX()==0)
-		{
-			System.out.println("【助手回報】無設定任何點");
-			System.out.println("【Exception】進程中止");
-
-		}
+											if(isNullPointer01==true && isNullPointer02==true)
+											{
+												System.out.println("【助手回報】無設定任何點");
+												System.out.println("【Exception】進程中止");
+									
+											}
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		else
 		{
 			
 			inr = 1;
 			while(true)
 			{
-				Color JudgeColor01 = robot.getPixelColor(PixelField_01_X, PixelField_01_Y);
-				Color JudgeColor01Support = robot.getPixelColor(PixelField_Support01_X, PixelField_Support01_Y);
-				Color JudgeColor02 = robot.getPixelColor(PixelField_02_X, PixelField_02_Y);
-				Color JudgeColor02Support = robot.getPixelColor(PixelField_Support02_X, PixelField_Support02_Y);
-				
-				HoldRetangular.SetColor(JudgeColor01);
-				HoldRetangula2.SetColor(JudgeColor02);
-				HoldRetangular.repaint();
-				HoldRetangula2.repaint();
+				ColorDetectingAndRepaint();
 				
 				Collections.shuffle(List1);		//骰出隨機點擊的位置
 				Collections.shuffle(List2);		//骰出隨機點擊的位置
@@ -102,22 +141,18 @@ public class RobotOperation implements Runnable
 						break;
 					}		
 				
-				if(JudgeColor01.getRed()==0 || JudgeColor01.getBlue()==0 || JudgeColor01.getGreen()==0 )	//是黑色就進入連續點擊
+				checkField01 = JudgeColor01.getRed()==0 || JudgeColor01.getBlue()==0 || JudgeColor01.getGreen()==0; //是黑色就給true
+				checkField02 = JudgeColor01Support.getRed() > 240 && JudgeColor01Support.getBlue() > 230 && JudgeColor01Support.getGreen() > 240; //接近白色就給true
+				
+				if(checkField01 && checkField02 == true)	//是黑色  和輔助區域接近紅色 就進入連續點擊 (表示未進山洞)
 				{
 					for(int count = 0 ; count < List1.size() ;count++)
 					{
 						/*
 						 * 用於在迴圈內判斷戰鬥區域顏色是否異常
 						 */
-						JudgeColor01 = robot.getPixelColor(PixelField_01_X, PixelField_01_Y);
-						JudgeColor01Support = robot.getPixelColor(PixelField_Support01_X, PixelField_Support01_Y);
-						System.out.println("顏色1為:"+JudgeColor01);	//取顏色
-						System.out.println("輔助顏色1為:"+JudgeColor01Support);	//取顏色
-						System.out.println("Player01觸發自動");
-						HoldRetangular.SetColor(JudgeColor01);
-						HoldRetangula2.SetColor(JudgeColor01Support);
-						HoldRetangular.repaint();
-						HoldRetangula2.repaint();
+						ColorDetectingAndRepaint();
+						
 						if(JudgeColor01.getRed()!=0 || JudgeColor01.getBlue()!=0 || JudgeColor01.getGreen()!=0 )
 						{
 							/*
@@ -175,15 +210,8 @@ public class RobotOperation implements Runnable
 						/*
 						 * 用於在迴圈內判斷戰鬥區域顏色是否異常
 						 */
-						JudgeColor02 = robot.getPixelColor(PixelField_02_X, PixelField_02_Y);
-						JudgeColor02Support = robot.getPixelColor(PixelField_Support02_X, PixelField_Support02_Y);
-						System.out.println("顏色2為:"+JudgeColor02);	//取顏色
-						System.out.println("輔助顏色2為:"+JudgeColor02Support);	//取顏色
-						System.out.println("Player02觸發自動");
-						HoldRetangular.SetColor(JudgeColor01);
-						HoldRetangula2.SetColor(JudgeColor02);
-						HoldRetangular.repaint();
-						HoldRetangula2.repaint();
+						ColorDetectingAndRepaint();
+						
 						if(JudgeColor02.getRed()!=0 || JudgeColor02.getBlue()!=0 || JudgeColor02.getGreen()!=0 )
 						{
 							/*
@@ -245,4 +273,23 @@ public class RobotOperation implements Runnable
 		inr = 0;
 	}
 	
+	public void ColorDetectingAndRepaint()
+	{
+		JudgeColor01 = robot.getPixelColor(PixelField_01_X, PixelField_01_Y);
+		JudgeColor01Support = robot.getPixelColor(PixelField_Support01_X, PixelField_Support01_Y);
+		JudgeColor02 = robot.getPixelColor(PixelField_02_X, PixelField_02_Y);
+		JudgeColor02Support = robot.getPixelColor(PixelField_Support02_X, PixelField_Support02_Y);
+		System.out.println("01區域顏色"+JudgeColor01);
+		System.out.println("01輔助顏色"+JudgeColor01Support);
+		System.out.println("02區域顏色"+JudgeColor02);
+		System.out.println("02輔助顏色"+JudgeColor02Support);
+		HoldRetangular.SetColor(JudgeColor01);
+		HoldRetangula2.SetColor(JudgeColor01Support);
+		HoldRetangula3.SetColor(JudgeColor02);
+		HoldRetangula4.SetColor(JudgeColor02Support);
+		HoldRetangular.repaint();
+		HoldRetangula2.repaint();
+		HoldRetangula3.repaint();
+		HoldRetangula4.repaint();
+	}
 }
