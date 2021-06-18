@@ -3,10 +3,12 @@ package abstractClass;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.JLabel;
 
 import object.ObjectXY;
+import robot.Launcher.MousePreRobot;
 
 public class MouseMultipleLocations_Button extends LocationAbstract
 {
@@ -27,19 +29,10 @@ public class MouseMultipleLocations_Button extends LocationAbstract
 	private JLabel HoldLabel8;
 	private String title8;
 	
-	private ObjectXY objectXY1;		//特殊抽象類多組設定
-	private ObjectXY objectXY2;		//特殊抽象類多組設定
-	private ObjectXY objectXY3;		//特殊抽象類多組設定
-	private ObjectXY objectXY4;		//特殊抽象類多組設定
-	private ObjectXY objectXY5;		//特殊抽象類多組設定
-	private ObjectXY objectXY6;		//特殊抽象類多組設定
-	private ObjectXY objectXY7;		//特殊抽象類多組設定
-	private ObjectXY objectXY8;		//特殊抽象類多組設定
-	
+	private Map<JLabel,String> List;
 	private int CountHit = 0;		//計算案幾次
 	
 	public ArrayList<ObjectXY> ObjectXYList = new ArrayList<ObjectXY>();
-	
 	public MouseMultipleLocations_Button(JLabel Label1, String Title1,
 										 JLabel Label2, String Title2,
 										 JLabel Label3, String Title3,
@@ -68,33 +61,15 @@ public class MouseMultipleLocations_Button extends LocationAbstract
 		HoldLabel8 = Label8;
 		title8 = Title8;
 		
-		objectXY1 = new ObjectXY();
-		objectXY1.setX(0);
-		objectXY1.setY(0);
-		objectXY2 = new ObjectXY();
-		objectXY2.setX(0);
-		objectXY2.setY(0);
-		objectXY3 = new ObjectXY();
-		objectXY3.setX(0);
-		objectXY3.setY(0);
-		objectXY4 = new ObjectXY();
-		objectXY4.setX(0);
-		objectXY4.setY(0);
-		objectXY5 = new ObjectXY();
-		objectXY5.setX(0);
-		objectXY5.setY(0);
-		objectXY6 = new ObjectXY();
-		objectXY6.setX(0);
-		objectXY6.setY(0);
-		objectXY7 = new ObjectXY();
-		objectXY7.setX(0);
-		objectXY7.setY(0);
-		objectXY8 = new ObjectXY();
-		objectXY8.setX(0);
-		objectXY8.setY(0);
-		
-		ObjectXYList.add(objectXY1);ObjectXYList.add(objectXY2);ObjectXYList.add(objectXY3);ObjectXYList.add(objectXY4);
-		ObjectXYList.add(objectXY5);ObjectXYList.add(objectXY6);ObjectXYList.add(objectXY7);ObjectXYList.add(objectXY8);
+		/*
+		 * Factory Init ObjectXY ↓
+		 * MousePreRobot.ObjectXY_Need() 由入口Launcher 指定需要生成幾個
+		 */
+		for(int count = 0 ; count < MousePreRobot.ObjectXY_Need() ; count ++)
+			{
+				ObjectXY Init_ObjectXY = new ObjectXY();		
+				ObjectXYList.add(Init_ObjectXY);
+			}	
 		
 		Keynumber = number;
 	}
@@ -180,11 +155,13 @@ public class MouseMultipleLocations_Button extends LocationAbstract
 	
 	public int getCountHit()
 	{
+		
 		return CountHit;
 	}
 	
 	public void setCountHit(int number)
 	{
+		
 		 CountHit = number;
 	}
 	

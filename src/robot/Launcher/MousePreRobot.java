@@ -1,3 +1,4 @@
+package robot.Launcher;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Container;
@@ -34,25 +35,23 @@ public class MousePreRobot
 		
 	}
 	
+	public static int ObjectXY_Need()	//提供ObjectXy 組數
+	{
+		return 8;
+	}
+	
 	public void GUI() throws AWTException
 	{
-	
+		/*
+		 *  (Step1) 編排面板 插入Label 提供顯示 或是提供已鎖定區域的XY 座標   插入Retangular 提供 區域判斷用
+		 */
 		JFrame frame = new JFrame();
 		frame.setLayout(null);
 		con = frame.getContentPane();
 		
-		JLabel text1 = new JLabel("01區域 顏色:");
-		text1.setBounds(20,530 , 550, 30);
-		JLabel text2 = new JLabel("01輔助區域 顏色:");
-		text2.setBounds(160,530 , 550, 30);
-		JLabel text3 = new JLabel("02區域 顏色:");
-		text3.setBounds(20,600 , 550, 30);
-		JLabel text4 = new JLabel("02輔助區域 顏色:");
-		text4.setBounds(160,600 , 550, 30);
-		
-		JLabel ButtonA = new JLabel("【步驟1】 Ctrl+D 用於設定 Player1 8格模塊 施放位置");
+		JLabel ButtonA = new JLabel("【步驟1】 Ctrl+W 用於設定 Player2 8格模塊 施放位置");
 		ButtonA.setBounds(10,10 , 320, 30);
-		JLabel ButtonB = new JLabel("【步驟2】 Ctrl+F 用於設定 Player2 8格模塊 施放位置");
+		JLabel ButtonB = new JLabel("【步驟2】 Ctrl+R 用於設定 Player1 8格模塊 施放位置");
 		ButtonB.setBounds(10,50 , 320, 30);
 		JLabel ButtonC = new JLabel("【步驟3】   開始行動按下 Ctrl + A");
 		ButtonC.setBounds(10,90 , 250, 30);
@@ -103,15 +102,24 @@ public class MousePreRobot
 		JLabel Dynamic14 = new JLabel("區域HH-X:     ,Y:     "+"I塊");
 		Dynamic14.setBounds(10,480 , 550, 30);
 		
-		JLabel Dynamic15 = new JLabel("偵測戰鬥用01區域座標-X:     ,Y:     "+"按Alt+Z");
+		JLabel text1 = new JLabel("01區域 顏色:");
+		text1.setBounds(420,600 , 550, 30);
+		JLabel text2 = new JLabel("01輔助區域 顏色:");
+		text2.setBounds(560,600 , 550, 30);
+		JLabel text3 = new JLabel("02區域 顏色:");
+		text3.setBounds(20,600 , 550, 30);
+		JLabel text4 = new JLabel("02輔助區域 顏色:");
+		text4.setBounds(160,600 , 550, 30);
+		
+		JLabel Dynamic15 = new JLabel("偵測戰鬥用02區域座標-X:     ,Y:     "+"按Alt+Q");
 		Dynamic15.setBounds(400,520 , 550, 30);
-		JLabel Dynamic16 = new JLabel("偵測戰鬥用01區域輔助座標-X:     ,Y:     ");
+		JLabel Dynamic16 = new JLabel("偵測戰鬥用02區域輔助座標-X:     ,Y:     ");
 		Dynamic16.setBounds(400,560 , 550, 30);
 		
-		JLabel Dynamic17 = new JLabel("偵測戰鬥用02區域座標-X:     ,Y:     "+"按Alt+X");
-		Dynamic17.setBounds(400,600 , 550, 30);
-		JLabel Dynamic18 = new JLabel("偵測戰鬥用02區域輔助座標-X:     ,Y:     ");
-		Dynamic18.setBounds(400,640 , 550, 30);
+		JLabel Dynamic17 = new JLabel("偵測戰鬥用01區域座標-X:     ,Y:     "+"按Alt+E");
+		Dynamic17.setBounds(10,520 , 550, 30);
+		JLabel Dynamic18 = new JLabel("偵測戰鬥用01區域輔助座標-X:     ,Y:     ");
+		Dynamic18.setBounds(10,560 , 550, 30);
 		
 		JButton ButtonG = new JButton("測試用按鈕 A 移動到此鈕按組合鍵");
 		ButtonG.addActionListener(new AButtonListener(ButtonG));
@@ -126,22 +134,23 @@ public class MousePreRobot
 		JButton ResetBattleField = new JButton("重設判斷區域");
 		ResetBattleField.setBounds(690, 545 , 130, 30);
 		ResetBattleField.setFont(new Font(Font.SERIF,Font.BOLD,12));
-		JButton ResetPlayer1 = new JButton("重設Player2");
+		JButton ResetPlayer1 = new JButton("重設Player1");
 		ResetPlayer1.setBounds(270, 300 , 130, 30);
 		ResetPlayer1.setFont(new Font(Font.SERIF,Font.BOLD,12));
-		JButton ResetPlayer2 = new JButton("重設Player1");
+		JButton ResetPlayer2 = new JButton("重設Player2");
 		ResetPlayer2.setBounds(630, 300 , 130, 30);
 		ResetPlayer2.setFont(new Font(Font.SERIF,Font.BOLD,12));
 		
 		
 		Retangular1 = new RetangularPanel();
-		Retangular1.setBounds(100,530, 50, 50);
+		Retangular1.setBounds(500,630, 50, 50);
 		Retangular2 = new RetangularPanel();
-		Retangular2.setBounds(270,530, 50, 50);
+		Retangular2.setBounds(670,630, 50, 50);
+		
 		Retangular3 = new RetangularPanel();
-		Retangular3.setBounds(100,600, 50, 50);
+		Retangular3.setBounds(100,630, 50, 50);
 		Retangular4 = new RetangularPanel();
-		Retangular4.setBounds(270,600, 50, 50);
+		Retangular4.setBounds(270,630, 50, 50);
 		
 		con.add(ButtonA);
 		con.add(ButtonB);
@@ -189,6 +198,10 @@ public class MousePreRobot
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		/*
+		 *  (Step2) 登記 Label 按鈕組數 ※注意越多會降低效率 ↓
+		 */
+		
 		MouseMultipleLocations_Button A = new MouseMultipleLocations_Button
 		(Dynamic,"A",
 		 Dynamic0,"B",
@@ -208,36 +221,42 @@ public class MousePreRobot
 		 Dynamic12,"FF",
 		 Dynamic13,"GG",
 		 Dynamic14,"HH",2);
-		MouseLocation_DoubleXY BattleField01 = new MouseLocation_DoubleXY(Dynamic15,Dynamic16,19,"偵測戰鬥用01區域座標","偵測戰鬥用01區域輔助座標");
-		MouseLocation_DoubleXY BattleField02 = new MouseLocation_DoubleXY(Dynamic17,Dynamic18,20,"偵測戰鬥用02區域座標","偵測戰鬥用02區域輔助座標");
+		MouseLocation_DoubleXY BattleField01 = new MouseLocation_DoubleXY(Dynamic15,Dynamic16,19,"偵測戰鬥用02區域座標","偵測戰鬥用02區域輔助座標");
+		MouseLocation_DoubleXY BattleField02 = new MouseLocation_DoubleXY(Dynamic17,Dynamic18,20,"偵測戰鬥用01區域座標","偵測戰鬥用01區域輔助座標");
 		
 		ResetBattleField.addActionListener(new ResetBattle_FieldButton(BattleField01,BattleField02));	//新增戰鬥區域判斷回歸按鈕
 		ResetPlayer1.addActionListener(new ResetBlocksButton(B));										//回歸設定按鈕
 		ResetPlayer2.addActionListener(new ResetBlocksButton(A));										//回歸設定按鈕
 		
+		/*
+		 *  (Step2-1) 註冊按鈕反應器 actionListener ↓
+		 */
 		JIntellitype.getInstance().addHotKeyListener(new MouseButtonStart(A,B,
 																		  BattleField01,BattleField02,
 																		  CheckBox,Retangular1,Retangular2,Retangular3,Retangular4));
 		JIntellitype.getInstance().addHotKeyListener(new MouseButtonStop());
-	
+		
+		/*
+		 *  (Step2-2) MouseMultipleLocations_Button 相當於一個Player ↓ A B 分別為 玩家區塊 BattleField01.02 為提供Pixel判斷區
+		 */
 		JIntellitype.getInstance().addHotKeyListener(A);
 		JIntellitype.getInstance().addHotKeyListener(B);
 		JIntellitype.getInstance().addHotKeyListener(BattleField01);
 		JIntellitype.getInstance().addHotKeyListener(BattleField02);
 		
 		
-
+		
+		/*
+		 *  (Step3)  指定按鈕   對應提供int 的號碼給註冊按鈕反應器做 偵測及判斷 ↓
+		 */
 		JIntellitype.getInstance().registerHotKey(3, JIntellitype.MOD_CONTROL, (int)'A');
 		JIntellitype.getInstance().registerHotKey(4, JIntellitype.MOD_CONTROL, (int)'S');
 		
-		JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_ALT, (int)'D');
-		JIntellitype.getInstance().registerHotKey(2, JIntellitype.MOD_ALT, (int)'F');
+		JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_ALT, (int)'R'); //Player1 設應Blocks
+		JIntellitype.getInstance().registerHotKey(2, JIntellitype.MOD_ALT, (int)'W'); //Player2 設應Blocks
 		
-		/*
-		 * 偵測用判斷區域 ↓
-		 */
-		JIntellitype.getInstance().registerHotKey(19, JIntellitype.MOD_ALT, (int)'Z');
-		JIntellitype.getInstance().registerHotKey(20, JIntellitype.MOD_ALT, (int)'X');
+		JIntellitype.getInstance().registerHotKey(19, JIntellitype.MOD_ALT, (int)'E'); //Player1 設應判斷
+		JIntellitype.getInstance().registerHotKey(20, JIntellitype.MOD_ALT, (int)'Q'); //Player2 設應判斷
 	}
 }
 

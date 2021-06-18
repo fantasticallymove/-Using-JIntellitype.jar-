@@ -45,6 +45,9 @@ public class RobotOperation implements Runnable
 	private Boolean checkField01 = false;
 	private Boolean checkField02 = false;	//修正這邊
 	
+	private Boolean checkField03 = false;
+	private Boolean checkField04 = false;	//修正這邊
+	
 	public RobotOperation(MouseMultipleLocations_Button A,MouseMultipleLocations_Button B,
 			 			  MouseLocation_DoubleXY Battle01 , MouseLocation_DoubleXY Battle02,
 						  Boolean Dynamic,RetangularPanel Retangular,RetangularPanel Retangular2,RetangularPanel Retangular3,RetangularPanel Retangular4) throws AWTException
@@ -71,7 +74,7 @@ public class RobotOperation implements Runnable
 		 PixelField_01_X = HoldBattleField01.getObjectXY().getX();
 		 PixelField_01_Y = HoldBattleField01.getObjectXY().getY();
 		 PixelField_Support01_X = HoldBattleField01.getObjectXY2().getX();
-		 PixelField_Support01_Y = HoldBattleField01.getObjectXY2().getX();
+		 PixelField_Support01_Y = HoldBattleField01.getObjectXY2().getY();
 		 PixelField_02_X = HoldBattleField02.getObjectXY().getX();
 		 PixelField_02_Y = HoldBattleField02.getObjectXY().getY();
 		 PixelField_Support02_X = HoldBattleField02.getObjectXY2().getX();
@@ -125,8 +128,15 @@ public class RobotOperation implements Runnable
 					}		
 				
 				checkField01 = JudgeColor01.getRed()==0 || JudgeColor01.getBlue()==0 || JudgeColor01.getGreen()==0; //是黑色就給true
-				checkField02 = JudgeColor01Support.getRed() > 240 && JudgeColor01Support.getBlue() > 230 && JudgeColor01Support.getGreen() > 240; //接近白色就給true
+				checkField02 = JudgeColor01Support.getRed() > 230 && JudgeColor01Support.getBlue() > 220 && JudgeColor01Support.getGreen() > 230; //接近白色就給true
 				
+				checkField03 = JudgeColor02.getRed()==0 || JudgeColor02.getBlue()==0 || JudgeColor02.getGreen()==0; //是黑色就給true
+				checkField04 = JudgeColor02Support.getRed() > 230 && JudgeColor02Support.getBlue() > 220 && JudgeColor02Support.getGreen() > 230; //接近白色就給true
+				
+//				System.out.println("checkField01:"+checkField01);
+//				System.out.println("checkField02:"+checkField02);
+//				System.out.println("checkField03:"+checkField03);
+//				System.out.println("checkField04:"+checkField04);
 				if(checkField01 && checkField02 == true)	//是黑色  和輔助區域接近紅色 就進入連續點擊 (表示未進山洞)
 				{
 					for(int count = 0 ; count < locationAbstract.ObjectXYList.size() ;count++)
@@ -141,7 +151,7 @@ public class RobotOperation implements Runnable
 							/*
 							 * 用於在迴圈不要走完提前打斷
 							 */
-							System.out.println("【 自動中止 】Non Attack state -Success");
+							System.out.println("【 自動中止 】攻擊狀態停止 偵測到已完成所有攻擊指令 -Success");
 							break;
 						}
 						
@@ -159,11 +169,11 @@ public class RobotOperation implements Runnable
 							
 							System.out.println("正在點擊區域: "+locationAbstract.ObjectXYList.get(count).getX()+" ,  "+locationAbstract.ObjectXYList.get(count).getY());
 							
-							if(count ==3)
+							if(count ==3 || count ==6)
 							{
 								if(DynamicMoveSelect==true)					//動態計算隨機等待時間
 								{
-									int RandomWait = 500+(int)(Math.random()*1000);
+									int RandomWait = 500+(int)(Math.random()*500);
 									System.out.println("動態等待時間"+RandomWait);
 									
 									robot.delay(RandomWait);
@@ -186,7 +196,7 @@ public class RobotOperation implements Runnable
 					}	
 				}
 				
-				if(JudgeColor02.getRed()==0 || JudgeColor02.getBlue()==0 || JudgeColor02.getGreen()==0 )	//是黑色就進入連續點擊
+				if(checkField03 && checkField04 == true)	//是黑色就進入連續點擊
 				{
 					for(int count = 0 ; count < locationAbstract2.ObjectXYList.size() ;count++)
 					{
@@ -200,7 +210,7 @@ public class RobotOperation implements Runnable
 							/*
 							 * 用於在迴圈不要走完提前打斷
 							 */
-							System.out.println("【 自動中止 】Non Attack state -Success");
+							System.out.println("【 自動中止 】攻擊狀態停止 偵測到已完成所有攻擊指令 -Success");
 							break;
 						}
 						
@@ -218,11 +228,11 @@ public class RobotOperation implements Runnable
 							
 							System.out.println("正在點擊區域: "+locationAbstract2.ObjectXYList.get(count).getX()+" ,  "+locationAbstract2.ObjectXYList.get(count).getY());
 							
-							if(count ==3)
+							if(count ==3 || count==6)
 							{
 								if(DynamicMoveSelect==true)					//動態計算隨機等待時間
 								{
-									int RandomWait = 500+(int)(Math.random()*1000);
+									int RandomWait = 500+(int)(Math.random()*750);
 									System.out.println("動態等待時間"+RandomWait);
 									
 									robot.delay(RandomWait);							
@@ -246,7 +256,9 @@ public class RobotOperation implements Runnable
 				}
 				
 				JudgeColor01 = null;
+				JudgeColor01Support = null;
 				JudgeColor02 = null;
+				JudgeColor02Support = null;
 			}
 		}
 	}
@@ -262,10 +274,6 @@ public class RobotOperation implements Runnable
 		JudgeColor01Support = robot.getPixelColor(PixelField_Support01_X, PixelField_Support01_Y);
 		JudgeColor02 = robot.getPixelColor(PixelField_02_X, PixelField_02_Y);
 		JudgeColor02Support = robot.getPixelColor(PixelField_Support02_X, PixelField_Support02_Y);
-		System.out.println("01區域顏色"+JudgeColor01);
-		System.out.println("01輔助顏色"+JudgeColor01Support);
-		System.out.println("02區域顏色"+JudgeColor02);
-		System.out.println("02輔助顏色"+JudgeColor02Support);
 		HoldRetangular.SetColor(JudgeColor01);
 		HoldRetangula2.SetColor(JudgeColor01Support);
 		HoldRetangula3.SetColor(JudgeColor02);
@@ -275,4 +283,7 @@ public class RobotOperation implements Runnable
 		HoldRetangula3.repaint();
 		HoldRetangula4.repaint();
 	}
+	
+
+
 }
